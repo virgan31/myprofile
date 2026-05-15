@@ -3,6 +3,8 @@ import { client } from "@/sanity/lib/client";
 import { PROFILE_QUERY, PROJECTS_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 
+export const revalidate = 60; // revalidate at most every hour
+
 // Types for our data
 interface Profile {
   name: string;
