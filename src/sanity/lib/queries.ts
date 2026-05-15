@@ -7,7 +7,9 @@ export const PROFILE_QUERY = defineQuery(`*[_type == "profile"][0]{
   profileImage,
   location,
   email,
-  socialLinks
+  socialLinks,
+  favicon,
+  ogImage
 }`)
 
 export const PROJECTS_QUERY = defineQuery(`*[_type == "project"] | order(_createdAt desc){

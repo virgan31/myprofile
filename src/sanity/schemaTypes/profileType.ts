@@ -54,5 +54,18 @@ export const profileType = defineType({
         },
       ],
     }),
+    defineField({
+      name: 'favicon',
+      title: 'Favicon (Browser Tab Icon)',
+      type: 'image',
+      description: 'A small square image (recommended 32x32 or 64x64 pixels) used as the browser tab icon.',
+    }),
+    defineField({
+      name: 'ogImage',
+      title: 'Social Share Image (OG Image)',
+      type: 'image',
+      description: 'The preview image shown when sharing your link on WhatsApp, Facebook, Twitter, etc. Recommended size: 1200x630 pixels.',
+      options: { hotspot: true },
+    }),
   ],
 })

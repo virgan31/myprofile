@@ -14,6 +14,8 @@ interface Profile {
   location?: string;
   email?: string;
   socialLinks?: { platform: string; url: string }[];
+  favicon?: any;
+  ogImage?: any;
 }
 
 interface Project {
@@ -29,9 +31,22 @@ interface Project {
 
 export async function generateMetadata() {
   const profile: Profile = await client.fetch(PROFILE_QUERY);
+  const title = `${profile?.name || 'Personal Profile'} | Portfolio`;
+  const description = profile?.headline || 'My personal portfolio website';
+
   return {
-    title: `${profile?.name || 'Personal Profile'} | Portfolio`,
-    description: profile?.headline || 'My personal portfolio website',
+    title,
+    description,
+    icons: profile?.favicon
+      ? { icon: urlFor(profile.favicon).width(64).height(64).url() }
+      : undefined,
+    openGraph: {
+      title,
+      description,
+      images: profile?.ogImage
+        ? [{ url: urlFor(profile.ogImage).width(1200).height(630).url(), width: 1200, height: 630 }]
+        : undefined,
+    },
   };
 }
 
