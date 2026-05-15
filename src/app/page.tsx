@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { client } from "@/sanity/lib/client";
-import { PROFILE_QUERY, PROJECTS_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
+import { PROFILE_QUERY, PROJECTS_QUERY } from "@/sanity/lib/queries";
+import Image from "next/image";
 
 export const revalidate = 0; // fetch fresh data on every request (real-time)
 
@@ -27,6 +27,14 @@ interface Project {
   githubUrl?: string;
 }
 
+export async function generateMetadata() {
+  const profile: Profile = await client.fetch(PROFILE_QUERY);
+  return {
+    title: `${profile?.name || 'Personal Profile'} | Portfolio`,
+    description: profile?.headline || 'My personal portfolio website',
+  };
+}
+
 export default async function Home() {
   // Fetch data from Sanity
   const profile: Profile = await client.fetch(PROFILE_QUERY);
@@ -50,7 +58,7 @@ export default async function Home() {
 
       <main className="mx-auto max-w-4xl px-6 py-20 lg:px-8 lg:py-32">
         {/* Hero Section */}
-        <section className="flex flex-col-reverse items-center justify-between gap-12 md:flex-row md:items-start">
+        <section className="flex flex-col-reverse items-center justify-between gap-12 md:flex-row md:items-start animate-fade-in-up">
           <div className="flex-1 space-y-6 text-center md:text-left">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
               I&apos;m <span className="text-indigo-600 dark:text-indigo-400">{profile.name}</span>
@@ -96,7 +104,7 @@ export default async function Home() {
         </section>
 
         {/* Bio Section */}
-        <section className="mt-24 max-w-2xl">
+        <section className="mt-24 max-w-2xl animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
           <h2 className="text-2xl font-bold tracking-tight">About</h2>
           <div className="mt-6 text-lg leading-8 text-zinc-600 dark:text-zinc-400">
             {profile.bio}
@@ -112,7 +120,7 @@ export default async function Home() {
         </section>
 
         {/* Projects Section */}
-        <section className="mt-24">
+        <section className="mt-24 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-bold tracking-tight">Projects</h2>
           </div>
